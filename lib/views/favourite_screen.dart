@@ -127,6 +127,7 @@ class _FavouriteScreenState extends State<FavouriteScreen> {
                           MaterialPageRoute(
                             builder: (context) => DetailScreen(
                               documentSnapshot: favouriteItem,
+                              heroTag: "favourite_${favouriteItem.id}_${favouriteItem['images']}", // Add this
                             ),
                           ),
                         );

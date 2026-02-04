@@ -10,7 +10,8 @@ import 'package:provider/provider.dart';
 
 class DetailScreen extends StatefulWidget {
   final DocumentSnapshot<Object?> documentSnapshot;
-  const DetailScreen({super.key, required this.documentSnapshot});
+  final String? heroTag;
+  const DetailScreen({super.key, required this.documentSnapshot, this.heroTag});
 
   @override
   State<DetailScreen> createState() => _DetailScreenState();
@@ -97,7 +98,7 @@ class _DetailScreenState extends State<DetailScreen> {
             Stack(
               children: [
                 Hero(
-                  tag: widget.documentSnapshot['images'],
+                  tag: widget.heroTag ?? widget.documentSnapshot['images'],
                   child: Container(
                     height: MediaQuery.of(context).size.height / 2.1,
                     decoration: BoxDecoration(

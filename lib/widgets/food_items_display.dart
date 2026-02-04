@@ -13,7 +13,15 @@ class FoodItemsDisplay extends StatelessWidget {
     final provider = FavouriteProvider.of(context);
     return GestureDetector(
       onTap: () {
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>DetailScreen(documentSnapshot: documentSnapshot)));
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailScreen(
+              documentSnapshot: documentSnapshot,
+              heroTag: "recipe_${documentSnapshot.id}_${documentSnapshot['images']}",
+            ),
+          ),
+        );
       },
       child: SizedBox(
         width: 230,
