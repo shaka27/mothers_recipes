@@ -4,7 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:mothers_recipes/widgets/user_service.dart';
 import 'package:mothers_recipes/utils/colors.dart';
 import 'package:mothers_recipes/widgets/auth_preferences.dart';
-
+import 'package:mothers_recipes/views/sign_up_screen.dart';
 class AuthScreen extends StatefulWidget {
   const AuthScreen({super.key});
 
@@ -72,15 +72,28 @@ class _AuthScreenState extends State<AuthScreen>
         email: _emailController.text.trim(),
         password: _passwordController.text.trim(),
       );
-
-      final user = FirebaseAuth.instance.currentUser;
-      if (user != null) {
-        await UserService.createUserIfNotExists(user);
-        await AuthPreferences.setMethod('email');
-      }
     } on FirebaseAuthException catch (e) {
-      setState(() => _error = e.message);
+      if (e.code == 'user-not-found') {
+        setState(() {
+          _error = 'No account found. Please sign up.';
+          _isLoading = false;  // Add this
+        });
+        return;
+      } else if (e.code == 'wrong-password') {
+        setState(() {
+          _error = 'Incorrect password';
+          _isLoading = false;  // Add this
+        });
+        return;
+      } else {
+        setState(() {
+          _error = e.message;
+          _isLoading = false;  // Add this
+        });
+        return;
+      }
     } finally {
+      // Or alternatively, use a finally block
       setState(() => _isLoading = false);
     }
   }
@@ -238,7 +251,27 @@ class _AuthScreenState extends State<AuthScreen>
                     ),
                   ),
 
+                  const SizedBox(height: 16),
+
+                  Center(
+                    child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => const SignUpScreen(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        "Don't have an account? Sign up",
+                        style: TextStyle(fontWeight: FontWeight.w600),
+                      ),
+                    ),
+                  ),
+
                   const SizedBox(height: 20),
+
                 ],
               ),
             ),

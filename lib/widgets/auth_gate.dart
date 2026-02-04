@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:mothers_recipes/views/auth_screen.dart';
-import 'package:mothers_recipes/views/app_HomeScreen.dart';
+import 'package:mothers_recipes/views/sign_in_screen.dart';
+import 'package:mothers_recipes/views/appMain.dart';
 
 class AuthGate extends StatelessWidget {
   const AuthGate({super.key});
@@ -20,7 +20,7 @@ class AuthGate extends StatelessWidget {
 
         // User logged in
         if (snapshot.hasData) {
-          return const MyAppHomescreen();
+          return const Appmain();
         }
 
         // Not logged in

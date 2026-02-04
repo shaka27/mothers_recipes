@@ -5,6 +5,7 @@ import 'package:mothers_recipes/views/view_All_Items.dart';
 import 'package:mothers_recipes/widgets/banner.dart';
 import 'package:mothers_recipes/widgets/food_items_display.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:mothers_recipes/utils/auth_logout.dart';
 
 class MyAppHomescreen extends StatefulWidget {
   const MyAppHomescreen({super.key});
@@ -63,9 +64,8 @@ class _MyAppHomescreenState extends State<MyAppHomescreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kbackgroundColor,
-      body: SafeArea(
+
+      return SafeArea(
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: Column(
@@ -77,7 +77,7 @@ class _MyAppHomescreenState extends State<MyAppHomescreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    headerPart(),
+                    headerPart(context),
                     searchBar(),
                     if (searchQuery.isEmpty) ...[
                       const MyBanner(),
@@ -255,7 +255,6 @@ class _MyAppHomescreenState extends State<MyAppHomescreen> {
             ],
           ),
         ),
-      ),
     );
   }
 
@@ -374,16 +373,22 @@ class _MyAppHomescreenState extends State<MyAppHomescreen> {
     );
   }
 
-  Widget headerPart() {
-    return const Row(
+  Widget headerPart(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(
-          "What are you\ncooking today?",
+        const Text(
+          "Mother’s Recipes",
           style: TextStyle(
-            fontSize: 32,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
-            height: 1,
           ),
+        ),
+        IconButton(
+          icon: const Icon(Icons.logout),
+          onPressed: () async {
+            await signOut(context);
+          },
         ),
       ],
     );
