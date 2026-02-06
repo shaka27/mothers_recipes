@@ -378,7 +378,7 @@ class _MyAppHomescreenState extends State<MyAppHomescreen> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         const Text(
-          "Mother’s Recipes",
+          "Pinch of Joy",
           style: TextStyle(
             fontSize: 24,
             fontWeight: FontWeight.bold,
